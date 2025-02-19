@@ -10,6 +10,11 @@ install:
 	pip install -r requirements/dev.txt
 	@echo "✅ Installation complete."
 
+update_exchange_rate:
+	@echo "🔄 Fetching latest exchange rates..."
+	python src/data_ingestion/upload_new_exchange_rate.py
+	@echo "✅ Exchange rates updated."
+
 # Run the pipeline
 run:
 	@echo "🚀 Running BDA pipeline..."

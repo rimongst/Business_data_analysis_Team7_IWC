@@ -10,6 +10,10 @@
   "loaded_data_2_path": "data/loaded_dataset_2.csv",
   "cleaned_data_1_path": "data/cleaned_dataset_1.csv",
   "cleaned_data_2_path": "data/cleaned_dataset_2.csv",
-  "combined_data_path": "data/combined_dataset.csv"
+  "combined_data_path": "data/combined_dataset.csv",
+  "gcp_bucket_name": "your-gcs-bucket-name",
+  "bucket_name" : "luxurybucketgourp7",
+  "destination_blob_name" : "images/my_watch_image.png",
+  "local_file_path" : "/Users/gaoshitan/Desktop/IW328210-pilot-mark-xx-intro-desktop.png.transform.global_image_1920_2x.avif"
 }
 

@@ -19,6 +19,22 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+def clean_column_names(df):
+    """
+    Ensure all column names follow BigQuery's naming convention:
+    - Convert to lowercase
+    - Replace spaces and special characters with underscores
+    - Strip leading/trailing spaces
+    """
+    df.columns = (
+        df.columns.str.lower()  # 转换为小写
+        .str.replace(r"\W", "_", regex=True)  # 替换非字母数字字符
+        .str.replace("__+", "_", regex=True)  # 避免多个下划线
+        .str.strip("_")  # 移除首尾的 "_"
+    )
+    return df
+
+
 
 def load_csv_to_bigquery():
     """Reading CSV and uploading to BigQuery"""
@@ -41,7 +57,12 @@ def load_csv_to_bigquery():
         )
 
         # Handling of column names
-        df.columns = df.columns.str.strip()
+        df.columns = (
+            df.columns.str.lower()  # Convert to lowercase
+            .str.replace(r"[^\w]", "_", regex=True)  # Replace non-alphanumeric characters with underscores
+            .str.replace("__+", "_", regex=True)  # Avoid multiple underscores
+            .str.strip("_")  # Remove leading/trailing underscores
+        )
 
         # Generate BigQuery table schema
         type_mapping = {

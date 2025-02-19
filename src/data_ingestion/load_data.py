@@ -58,9 +58,7 @@ if __name__ == "__main__":
         print(df1.head())
 
         # Load dataset 2 (use ";" if necessary)
-        df2 = load_data_from_csv(
-            config["dataset_2_path"], sep=","
-        )  # ✅ dataset_2.csv 可能用 `;`
+        df2 = load_data_from_csv(config["dataset_2_path"], sep=";")
         loaded_data_2_path = get_absolute_path(config["loaded_data_2_path"])
         df2.to_csv(loaded_data_2_path, index=False)
         print(f"✅ Dataset 2 loaded and saved as '{loaded_data_2_path}'")

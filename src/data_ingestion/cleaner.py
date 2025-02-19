@@ -3,7 +3,10 @@ import os
 
 import pandas as pd
 
-from data_ingestion.load_data import get_absolute_path  # ✅ 复用路径解析
+from data_ingestion.load_data import get_absolute_path
+
+
+EXCHANGE_RATE_FILE = get_absolute_path("data/exchange_rates.json")
 
 # Load configuration file
 config_path = os.path.abspath(
@@ -12,39 +15,57 @@ config_path = os.path.abspath(
 with open(config_path, "r") as f:
     config = json.load(f)
 
+def load_exchange_rates():
+    """
+    Load exchange rates from exchange_rates.json.
+    If the file is missing or corrupted, fallback to default rates.
+    """
+    if not os.path.exists(EXCHANGE_RATE_FILE):
+        print("⚠️ Warning: Exchange rate file not found. Using default values.")
+        return None
+
+    try:
+        with open(EXCHANGE_RATE_FILE, "r") as f:
+            exchange_rates = json.load(f)
+        print(f"✅ Loaded {len(exchange_rates)} exchange rates from file.")
+        return exchange_rates
+
+    except json.JSONDecodeError:
+        print("❌ Error: Corrupted exchange rate file. Using default values.")
+        return None
+
 
 # Convert price to EUR
-def convert_price_to_eur(df):
-    """Convert prices to EUR using a given exchange rate dictionary."""
+def convert_price_to_eur(df, exchange_rates):
+    """
+    Convert prices to EUR using exchange rates from file.
+    If file is missing, falls back to default exchange rates.
+    """
+    exchange_rates = load_exchange_rates()
 
-    exchange_rates = {
-        "CHF": 1.05,
-        "CNY": 0.13,
-        "EUR": 1.00,
-        "GBP": 1.17,
-        "HKD": 0.12,
-        "JPY": 0.007,
-        "SGD": 0.69,
-        "TWD": 0.029,
-        "USD": 0.92,
-        "AED": 0.25,
-        "KRW": 0.0007,
-    }
+    # If no valid rates, fallback to defaults
+    if exchange_rates is None:
+        exchange_rates = {
+            "CHF": 0.94, "CNY": 7.61, "EUR": 1.00, "GBP": 0.83,
+            "HKD": 8.12, "JPY": 158.74, "SGD": 1.40, "TWD": 34.22,
+            "USD": 1.05, "AED": 3.84, "KRW": 1506.98,
+        }
+        print("⚠️ Using hardcoded fallback exchange rates.")
 
+    # Apply conversion
     if "price" in df.columns and "currency" in df.columns:
         df["price_in_eur"] = df.apply(
-            lambda row: row["price"] * exchange_rates.get(row["currency"], 1)
+            lambda row: row["price"] / exchange_rates.get(row["currency"], 1)
             if pd.notna(row["price"]) and pd.notna(row["currency"])
             else None,
             axis=1,
         )
-        df.dropna(subset=["price_in_eur"], inplace=True)  # 移除转换失败的行
+        df.dropna(subset=["price_in_eur"], inplace=True)
     else:
-        raise KeyError(
-            "❌ Error: Columns 'price' and 'currency' are required in the dataset."
-        )
+        raise KeyError("❌ Error: Columns 'price' and 'currency' are required in the dataset.")
 
     return df
+
 
 
 # Filter potentially incorrect price data
@@ -84,9 +105,9 @@ def fix_collection_names(df):
 
 
 # Full preprocessing function
-def preprocess_data(df):
-    """Applies all data cleaning steps to the dataset."""
-    df = convert_price_to_eur(df)
+def preprocess_data(df, exchange_rates):
+    """Applies all data cleaning steps to the dataset, using real exchange rates."""
+    df = convert_price_to_eur(df, exchange_rates)
     df = filter_price_outliers(df)
     df = fix_collection_names(df)
     return df

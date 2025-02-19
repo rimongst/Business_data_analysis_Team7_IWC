@@ -16,11 +16,11 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "run_cleaner=data_ingestion.cleaner:main",
-            "run_combine=data_ingestion.combine_data:main",
-            "run_upload=data_ingestion.upload_csv:main",
-            "run_viz=data_viz.data_viz:main",
-            "run_pipeline=main:main",
+            "run_cleaner=src.data_ingestion.cleaner:main",
+            "run_combine=src.data_ingestion.combine_data:main",
+            "run_upload=src.data_ingestion.upload_csv:main",
+            "run_viz=src.data_viz.data_viz:main",
+            "run_pipeline=src.main:main",
         ]
     },
     classifiers=[

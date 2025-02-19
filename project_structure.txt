@@ -1,0 +1,31 @@
+BDA/
+│── .venv/                  # Virtual environment directory (should be ignored in .gitignore)
+│── data/                    # Directory for storing datasets
+│   ├── dataset_1.csv
+│   ├── PM_extract_Jan_2025_10_brands.csv
+│── requirements/            # Dependency management
+│   ├── base.txt             # Core dependencies
+│   ├── dev.txt              # Additional dependencies for development
+│── scripts/                 # Standalone executable scripts (currently empty)
+│── src/                     # Main source code directory
+│   ├── api/                 # API-related code
+│   │   ├── upload_new_exchange_rate.py
+│   ├── data_ingestion/       # Data processing module
+│   │   ├── __init__.py
+│   │   ├── cleaner.py        # Data cleaning
+│   │   ├── combine_data.py   # Combining multiple datasets
+│   │   ├── data_viz.py       # Data visualization
+│   │   ├── download_from_bigquery.py  # Fetching data from Google BigQuery
+│   │   ├── load_data.py      # Data loading process
+│   │   ├── upload_csv.py     # Uploading CSV data
+│   │   ├── upload_to_bucket.py  # Uploading data to cloud storage (e.g., GCS)
+│   │── main.py               # Main entry point of the project
+│── tests/                    # Directory for unit tests
+│── .coverage                 # Code coverage report
+│── .env                      # Environment variables (e.g., API keys, database connections)
+│── config.json               # Configuration file for the project
+│── Makefile                  # Automation tasks (e.g., dependency installation)
+│── project_structure.txt
+│── README.md                 # Project introduction and setup guide
+│── setup.py                  # Python package setup file
+
