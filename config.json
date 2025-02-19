@@ -1,0 +1,15 @@
+{
+  "project_id": "my-new-luxury-project",
+  "dataset_id": "luxury_watch_data",
+  "table_id": "uploaded",
+  "csv_file_path": "data/combined_dataset.csv",
+  "key_path": "/Users/gaoshitan/Downloads/my-new-luxury-project-7d3336d0c6d6.json",
+  "dataset_1_path": "data/dataset_1.csv",
+  "dataset_2_path": "data/PM_extract_Jan_2025_10_brands.csv",
+  "loaded_data_1_path": "data/loaded_dataset_1.csv",
+  "loaded_data_2_path": "data/loaded_dataset_2.csv",
+  "cleaned_data_1_path": "data/cleaned_dataset_1.csv",
+  "cleaned_data_2_path": "data/cleaned_dataset_2.csv",
+  "combined_data_path": "data/combined_dataset.csv"
+}
+
