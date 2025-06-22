@@ -190,5 +190,3 @@ For questions or issues, please **open an issue** on GitHub or contact me at:
 ✅ **Updated project structure** to reflect all modules  
 ✅ **Expanded Makefile commands** for better automation  
 ✅ **Improved installation & setup instructions** for new users  
-
-This **README.md** is now fully detailed and structured for both **beginners** and **experienced developers**. Let me know if you need any modifications! 🚀🔥
